@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<form>
+<form method='POST' action='/comment'>
     <fieldset>
         <legend>Add a Comment</legend>
         <!-- TITLE -->
@@ -27,6 +27,7 @@
     <!-- BUTTON -->
     <div class='form-group'>
         <button class='btn btn-primary' type='submit'>Save Comment</button>
+        <a href='/'>log out</a>
     </div>
 </form>
 {% endblock %}

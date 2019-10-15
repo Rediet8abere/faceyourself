@@ -9,6 +9,7 @@ from user import user
 client = MongoClient()
 db = client.faceyourself
 users = db.users
+comments = db.comments
 
 app = Flask(__name__)
 
@@ -46,7 +47,7 @@ def login():
         if form.validate_on_submit():
             if users.find_one({"email": form.email.data}):
                 if (form.email.data == users.find_one({"email": form.email.data})["email"]) and (form.password.data == users.find_one({"email": form.email.data})["password"]):
-                    return redirect(url_for('movies_index'))
+                    return redirect(url_for('comment'))
             else:
                 flash(f'Log in unsuccessful. Please Check password and email', 'danger')
     return render_template('login.html', form=form)
@@ -54,11 +55,19 @@ def login():
     if request.method == 'GET':
         return render_template('login.html', form=form)
 
-@app.route('/comment')
+@app.route('/comment', methods = ['GET', 'POST'])
 def comment():
     """commentpage."""
-    # return "holla"
-    return render_template('comment_form.html')
+    if request.method == 'POST':
+        comment = {
+            'title': request.form.get('title'),
+            'content': request.form.get('content')
+            }
+        comments.insert_one(comment)
+        return redirect(url_for('index'))
+
+    if request.method == 'GET':
+        return render_template('comment_form.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
