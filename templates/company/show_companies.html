@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Companies</h1>
+
+<a href='/add/company'>Add Company</a>
+<a href='/'>Back to Home</a>
+
+{% for company in companies %}
+    <h2><a href=''>{{ company.title }}</a></h2>
+    <small>{{ company.description }}</small>
+{% endfor %}
+{% endblock %}
