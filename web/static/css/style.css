@@ -1,0 +1,11 @@
+{
+    margin: auto;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+body {
+    height:100vh;
+    display: flex;
+    background-color: rgba(87, 190, 130, 0.5);
+}

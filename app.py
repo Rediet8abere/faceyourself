@@ -12,7 +12,9 @@ employees = db.employees
 comments = db.comments
 companies = db.companies
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='',
+            static_folder='web/static')
+
 
 app.config['SECRET_KEY'] = 'f324912c56dd495dc348bfd3cf23882dd80a483e190c5c78'
 
@@ -109,6 +111,8 @@ def show_comment(company_id):
     """view all comment."""
     company = companies.find_one({'_id': ObjectId(company_id)})
     return render_template('partials/show_comments.html', company=company)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
