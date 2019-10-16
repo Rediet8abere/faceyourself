@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>comments</h1>
-{% for comment in comments %}
-    <h2>{{ comment.title }}</h2>
-    <small>{{ comment.content }}</small>
-{% endfor %}
+    <h2>{{ company.title }}</h2>
+    <small>{{ company.content }}</small>
 <br>
-<a href='/show/add'>Back</a>
+<a href='/show/add/{{ company._id }}'>Back</a>
 {% endblock %}

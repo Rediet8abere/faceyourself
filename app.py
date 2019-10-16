@@ -104,10 +104,11 @@ def show_add(company_id):
     company = companies.find_one({'_id': ObjectId(company_id)})
     return render_template('partials/show_add.html', company=company)
 
-@app.route('/showcomment')
-def show_comment():
+@app.route('/showcomment/<company_id>')
+def show_comment(company_id):
     """view all comment."""
-    return render_template('partials/show_comments.html', comments = comments.find())
+    company = companies.find_one({'_id': ObjectId(company_id)})
+    return render_template('partials/show_comments.html', company=company)
 
 if __name__ == '__main__':
     app.run(debug=True)
