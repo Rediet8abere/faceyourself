@@ -48,7 +48,7 @@ def login():
         if form.validate_on_submit():
             if employees.find_one({"email": form.email.data}):
                 if (form.email.data == employees.find_one({"email": form.email.data})["email"]) and (form.password.data == employees.find_one({"email": form.email.data})["password"]):
-                    return redirect(url_for('add_company'))
+                    return redirect(url_for('show_companies'))
             else:
                 flash(f'Log in unsuccessful. Please Check password and email', 'danger')
     return render_template('login.html', form=form)
@@ -56,12 +56,17 @@ def login():
     if request.method == 'GET':
         return render_template('login.html', form=form)
 
+@app.route('/companies/show')
+def show_companies():
+    """Show all companies."""
+    return render_template('company/show_companies.html', companies=companies.find())
+
 @app.route('/add/company', methods = ['GET', 'POST'])
 def add_company():
     """Add Company."""
     if request.method == 'POST':
         company = {
-            'title': request.form.get('title'),
+            'name': request.form.get('name'),
             'description': request.form.get('description')
             }
         companies.insert_one(company)
@@ -69,31 +74,35 @@ def add_company():
 
     if request.method == 'GET':
         return render_template('company/add_company.html')
-
-@app.route('/companies/show')
-def show_companies():
-    """Show all companies."""
-    return render_template('company/show_companies.html', companies=companies.find())
-
-# @app.route('/companies/<company_id>')
-# def show_companies(company_id):
-#     """Show all companies."""
-#     company = companies.find_one({'_id': ObjectId(company_id)})
-#     return render_template('company/show_companies.html', company=company)
-
-@app.route('/comment', methods = ['GET', 'POST'])
-def comment():
+# for every company user adds a separate comment database should be created
+@app.route('/comment/<company_id>', methods = ['GET', 'POST'])
+def comment(company_id):
     """commentpage."""
     if request.method == 'POST':
         comment = {
             'title': request.form.get('title'),
             'content': request.form.get('content')
             }
-        comments.insert_one(comment)
+        companies.update_one(
+        {'_id': ObjectId(company_id)},
+        {'$set': comment})
         return redirect(url_for('index'))
 
     if request.method == 'GET':
-        return render_template('partials/comment_form.html')
+        # return f" GET hello { company_id } hello"
+        return render_template('partials/comment_form.html', company_id=company_id)
+# when I click on google I want see two options, show comment and add comment
+@app.route('/companies/<company_id>')
+def show_comment_realtedToCompaney(company_id):
+    """Show comment related to the companey."""
+    company = companies.find_one({'_id': ObjectId(company_id)})
+    return render_template('partials/show_comments.html',company=company)
+
+@app.route('/show/add/<company_id>')
+def show_add(company_id):
+    """option to show or add comments."""
+    company = companies.find_one({'_id': ObjectId(company_id)})
+    return render_template('partials/show_add.html', company=company)
 
 @app.route('/showcomment')
 def show_comment():
