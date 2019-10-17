@@ -9,11 +9,10 @@ from user import user
 client = MongoClient()
 db = client.faceyourself
 employees = db.employees
-comments = db.comments
 companies = db.companies
 
 app = Flask(__name__, static_url_path='',
-            static_folder='web/static')
+            static_folder='templates/static')
 
 
 app.config['SECRET_KEY'] = 'f324912c56dd495dc348bfd3cf23882dd80a483e190c5c78'
@@ -76,7 +75,7 @@ def add_company():
 
     if request.method == 'GET':
         return render_template('company/add_company.html')
-# for every company user adds a separate comment database should be created
+
 @app.route('/comment/<company_id>', methods = ['GET', 'POST'])
 def comment(company_id):
     """commentpage."""
@@ -84,16 +83,19 @@ def comment(company_id):
         comment = {
             'title': request.form.get('title'),
             'content': request.form.get('content')
-            }
+        }
+
+        comment = { "comment": {
+                    'title': request.form.get('title'),
+                    'content': request.form.get('content')
+        }}
         companies.update_one(
         {'_id': ObjectId(company_id)},
-        {'$set': comment})
-        return redirect(url_for('index'))
+        {'$push': comment})
+        return redirect(url_for('show_add', company_id=company_id))
 
     if request.method == 'GET':
-        # return f" GET hello { company_id } hello"
         return render_template('partials/comment_form.html', company_id=company_id)
-# when I click on google I want see two options, show comment and add comment
 @app.route('/companies/<company_id>')
 def show_comment_realtedToCompaney(company_id):
     """Show comment related to the companey."""
@@ -111,6 +113,7 @@ def show_comment(company_id):
     """view all comment."""
     company = companies.find_one({'_id': ObjectId(company_id)})
     return render_template('partials/show_comments.html', company=company)
+
 
 
 
