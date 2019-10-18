@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <!-- <a href='/showcomment'>Show comments</a> -->
-<a href='/showcomment/{{company._id}}'>Show comments</a>
-<a href='/comment/{{company._id}}'>Add comments</a>
-<br>
 <a href='/companies/show'>Back</a>
+<br>
+<button class="btn btn-lg btn-block text-uppercase"><a href='/showcomment/{{company._id}}'>Show comments</a></button>
+<button class="btn btn-lg btn-block text-uppercase"><i class="fas fa-comment-alt-smile"><a href='/comment/{{company._id}}'></i>Add comments</a></button>
+
+
 {% endblock %}

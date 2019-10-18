@@ -1,44 +1,52 @@
 {% extends 'base.html' %}
 {% block content %}
-<form method='POST' action='/comment/{{company_id}}'>
-    <fieldset>
-        <legend>Add a Comment</legend>
-        <!-- ID -->
-        <div class='form-group'>
-            <label for='comment-id'>id</label><br>
-            <input class='form-control'
-                id='comment-id'
-                type='text'
-                name='id'
-                placeholder='id'/>
-        </div>
+<link rel="stylesheet" type="text/css" href="../css/company_homepage.css">
+<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+  <div class="card card-signin my-5">
+    <div class="card-body">
+      <h5 class="card-title text-center">Add Company</h5>
+            <form method='POST' action='/comment/{{company_id}}'>
+                <fieldset>
+                    <legend>Add a Comment</legend>
+                    <!-- ID -->
+                    <div class='form-group'>
+                        <label for='comment-id'>id</label><br>
+                        <input class='form-control'
+                            id='comment-id'
+                            type='text'
+                            name='id'
+                            placeholder='id'/>
+                    </div>
 
-        <!-- TITLE -->
-        <div class='form-group'>
-            <label for='comment-title'>Title</label><br>
-            <input class='form-control'
-                id='comment-title'
-                type='text'
-                name='title'
-                placeholder='Title'/>
-        </div>
+                    <!-- TITLE -->
+                    <div class='form-group'>
+                        <label for='comment-title'>Title</label><br>
+                        <input class='form-control'
+                            id='comment-title'
+                            type='text'
+                            name='title'
+                            placeholder='Title'/>
+                    </div>
 
-        <!-- DESCRIPTION -->
-        <div class='form-group'>
-            <label for='comment-content'>Description</label><br>
-            <textarea class='form-control'
-                id='comment-content'
-                name='content'
-                rows='10'
-                placeholder='Your comment...'></textarea>
-        </div>
-    </fieldset>
+                    <!-- DESCRIPTION -->
+                    <div class='form-group'>
+                        <label for='comment-content'>Description</label><br>
+                        <textarea class='form-control'
+                            id='comment-content'
+                            name='content'
+                            rows='10'
+                            placeholder='Your comment...'></textarea>
+                    </div>
+                </fieldset>
 
-    <!-- BUTTON -->
-    <div class='form-group'>
-        <button class='btn btn-primary' type='submit'>Save Comment</button>
+                <!-- BUTTON -->
+                <div class='form-group'>
+                    <button class='btn btn-primary' type='submit'>Save Comment</button>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
+</div>
 <br>
 <a href='/show/add/{{company_id}}'>Back</a>
 {% endblock %}
