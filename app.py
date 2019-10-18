@@ -57,6 +57,12 @@ def login():
     if request.method == 'GET':
         return render_template('login.html', form=form)
 
+# @app.route('/account/< account_id >/delete')
+# def delete_account(account_id):
+#     """Delete Account."""
+#     employees.delete_one({'_id': ObjectId(account_id)})
+#     return redirect(url_for('playlists_index'))
+
 @app.route('/companies/show')
 def show_companies():
     """Show all companies."""
@@ -99,6 +105,33 @@ def show_add(company_id):
     company = companies.find_one({'_id': ObjectId(company_id)})
     return render_template('partials/show_add.html', company=company)
 
+# '/company/{{ company._id }}/delete'
+@app.route('/company/<company_id>/delete', methods=['POST'])
+def company_delete(company_id):
+    """Delete one company."""
+    companies.delete_one({'_id': ObjectId(company_id)})
+    return redirect(url_for('add_company'))
+
+# /company/{{ company._id }}/edit
+@app.route('/company/<company_id>/edit')
+def company_edit(company_id):
+    """Show the edit form for a company."""
+    company = companies.find_one({'_id': ObjectId(company_id)})
+    return render_template('company/company_edit.html', company=company)
+
+# /company/{{company._id}}
+@app.route('/company/<company_id>', methods=['POST'])
+def company_update(company_id):
+    """Submit an edited company."""
+    updated_company = {
+        'name': request.form.get('name'),
+        'description': request.form.get('description')
+    }
+    companies.update_one(
+        {'_id': ObjectId(company_id)},
+        {'$set': updated_company})
+    return redirect(url_for('show_companies'))
+
 @app.route('/showcomment/<company_id>')
 def show_comment(company_id):
     """view all comment."""
@@ -120,15 +153,15 @@ def comment_delete(comment_id, company_id):
         # db.profiles.update( { _id: 1 }, { $pull: { votes: { $gte: 6 } } } )
         # { $pull: { <field1>: <value|condition>, <field2>: <value|condition>, ... } }
         print("Post")
-        # companies.update_one(
-        # {'_id': ObjectId(company_id)},
-        # {'$pull': {"comment" : f"{comment_id}"}})
+        companies.update_one(
+        {'_id': ObjectId(company_id)},
+        {'$pull': {"comment" : f"{comment_id}"}})
 
         #TODO: Find and store the entire array of comments for company database
 
-        for index, comment in enumerate(comment_array):
-            if comment._id == comment_id:
-                del[index]
+        # for index, comment in enumerate(comment_array):
+        #     if comment._id == comment_id:
+        #         del[index]
 
 
         # TODO: Update field to newly created array

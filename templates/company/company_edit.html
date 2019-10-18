@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method='POST' action='/company/{{company._id}}'>
+    <fieldset>
+    <div class="form-label-group">
+        <input type='text' name='name' class="form-control"/>
+        <label for='name'>Name</label><br>
+    </div>
+    <div class="form-label-group">
+        <input type='text' name='description' class="form-control"/>
+        <label for='description'>Description</label><br>
+    </div>
+    </fieldset>
+    <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Save Company</button>
+</form>
+{% endblock %}
