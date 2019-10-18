@@ -1,16 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
+<section class="pricing py-5">
 <h1>comments</h1>
-
+<div class="row">
 {% for comment in company.comment %}
-    <br>
-    <small>{{ comment.title }}</small>
-    <br>
-    <small>{{ comment.content }}</small>
-    <br>
-    <br>
+    <div class="col-lg-4">
+    <div class="card mb-5 mb-lg-0">
+    <div class="card-body">
+        <h2><a href='/comment/{{ comment.id }}/{{ company._id }}/delete' class="btn btn-block btn-primary text-uppercase" >{{ comment.title }}</a></h2>
+        <br>
+        <small>comment id {{ comment.id }}</small>
+        <br>
+        <small>{{ comment.title }}</small>
+        <br>
+        <small>{{ comment.content }}</small>
+        <br>
+        <br>
+    </div>
+    </div>
+    </div>
 {% endfor %}
-
+</div>
 <br>
-<a href='/show/add/{{ company._id }}'>Back</a>
+</section>
 {% endblock %}

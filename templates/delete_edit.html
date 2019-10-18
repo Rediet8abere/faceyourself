@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href='/'>Back to Home</a>
+
+<h1>{{ comment_id }}</h1>
+<p>{{ company_id }}</p>
+<form method='POST' action='/comment/{{ comment_id }}/{{ company_id }}/delete'>
+    <button type='submit'>Delete</button>
+</form>
+{% endblock %}
