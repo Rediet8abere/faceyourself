@@ -1,0 +1,10 @@
+section {
+  background: #007bff;
+  background: linear-gradient(to right, #0062E6, #33AEFF);
+  background-color: #92a8d1;
+}
+.bg-image {
+  background-image: url(../img/20903425-feedback-or-comments-road-sign-illustration-over-a-white-background.jpeg);
+  background-size: cover;
+  background-position: center;
+}

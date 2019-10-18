@@ -105,21 +105,18 @@ def show_add(company_id):
     company = companies.find_one({'_id': ObjectId(company_id)})
     return render_template('partials/show_add.html', company=company)
 
-# '/company/{{ company._id }}/delete'
 @app.route('/company/<company_id>/delete', methods=['POST'])
 def company_delete(company_id):
     """Delete one company."""
     companies.delete_one({'_id': ObjectId(company_id)})
     return redirect(url_for('add_company'))
 
-# /company/{{ company._id }}/edit
 @app.route('/company/<company_id>/edit')
 def company_edit(company_id):
     """Show the edit form for a company."""
     company = companies.find_one({'_id': ObjectId(company_id)})
     return render_template('company/company_edit.html', company=company)
 
-# /company/{{company._id}}
 @app.route('/company/<company_id>', methods=['POST'])
 def company_update(company_id):
     """Submit an edited company."""
@@ -137,57 +134,7 @@ def show_comment(company_id):
     """view all comment."""
     company = companies.find_one({'_id': ObjectId(company_id)})
     return render_template('partials/show_comments.html', company=company)
-# I have to get the companies id and the comments id
-@app.route('/comment/<comment_id>/<company_id>/delete', methods = ['GET', 'POST'])
-def comment_delete(comment_id, company_id):
-    """Delete one comment."""
-    print("asdasda")
-    # return render_template('delete_edit.html', comment_id=comment_id, company_id=company_id)
-    if request.method == 'GET':
-        print("GET")
-        return render_template('delete_edit.html', comment_id=comment_id, company_id=company_id)
-    if request.method == 'POST':
-        # print("In here")
-        # return f'{comment_id}, {company_id}'
 
-        # db.profiles.update( { _id: 1 }, { $pull: { votes: { $gte: 6 } } } )
-        # { $pull: { <field1>: <value|condition>, <field2>: <value|condition>, ... } }
-        print("Post")
-        companies.update_one(
-        {'_id': ObjectId(company_id)},
-        {'$pull': {"comment" : f"{comment_id}"}})
-
-        #TODO: Find and store the entire array of comments for company database
-
-        # for index, comment in enumerate(comment_array):
-        #     if comment._id == comment_id:
-        #         del[index]
-
-
-        # TODO: Update field to newly created array
-
-
-        companies.update(
-        {'_id': ObjectId(company_id)},
-        {'$pull': {"comment" : {"_id":f"{comment_id}"}}})
-
-        # { $pull: { <field1>: <value|condition>, <field2>: <value|condition>, ... } }
-
-        # companies.update(
-        #     { },
-        #     { $pull: { comment: { $in: [ "apples", "oranges" ] }, vegetables: "carrots" } },
-        #     { multi: true }
-        # )
-
-        # print("POST")
-        # companies.find_one_and_update({"_id": ObjectId(company_id)},
-        #                          {"$set": {"comment": []}})
-        # companies.delete_one({'_id': ObjectId(company_id)})
-
-        print("HERE2")
-        return redirect(url_for('index'))
-    # companies.delete_one({'_id': ObjectId(comment_id)})
-    # return redirect(url_for('show_comment', company_id=company_id))
 
 
 

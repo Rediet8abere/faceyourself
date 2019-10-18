@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 <!-- <a href='/showcomment'>Show comments</a> -->
-<a href='/companies/show'>Back</a>
-<br>
-<button class="btn btn-lg btn-block text-uppercase"><a href='/showcomment/{{company._id}}'>Show comments</a></button>
-<button class="btn btn-lg btn-block text-uppercase"><i class="fas fa-comment-alt-smile"><a href='/comment/{{company._id}}'></i>Add comments</a></button>
-<!-- Delete button -->
-<p><form method='POST' action='/company/{{ company._id }}/delete'>
-    <button type='submit'>Delete</button>
-</form></p>
-<!-- Edit button -->
-<p><a href='/company/{{ company._id }}/edit'>Edit</a></p>
-
-
-
+<link rel="stylesheet" type="text/css" href="../partials/css/show_add.css">
+<div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+<section>
+    <a href='/companies/show'>Back</a>
+    <br>
+    <button class="btn btn-lg btn-block text-uppercase"><a href='/showcomment/{{company._id}}'>Show comments</a></button>
+    <button class="btn btn-lg btn-block text-uppercase"><i class="fas fa-comment-alt-smile"><a href='/comment/{{company._id}}'></i>Add comments</a></button>
+    <!-- Delete button -->
+    <p><form method='POST' action='/company/{{ company._id }}/delete'>
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form></p>
+    <!-- Edit button -->
+    <p><a href='/company/{{ company._id }}/edit'>Edit</a></p>
+</section>
 {% endblock %}
