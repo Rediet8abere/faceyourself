@@ -5,9 +5,9 @@ from forms import RegistrationForm, LoginForm
 import os
 from user import user
 
-
-client = MongoClient()
-db = client.faceyourself
+host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/Playlister')
+client = MongoClient(host=f'{host}?retryWrites=false')
+db = client.get_default_database()
 employees = db.employees
 companies = db.companies
 
@@ -131,7 +131,7 @@ def comment_delete(comment_id, company_id):
                 del[index]
 
 
-        # TODO: Update feidl to newly created array
+        # TODO: Update field to newly created array
 
 
         companies.update(
